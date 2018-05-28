@@ -9,7 +9,7 @@ describe('original output', () => {
     classifier = new Classifier();
     labeledSongs.forEach(([label, song]) => classifier.train(song, label));
     classifier.makeReady();
-  })
+  });
 
   it('classifies example 1', () => {
     assert.deepEqual(classifier.classify(['d', 'g', 'e', 'dm']), {

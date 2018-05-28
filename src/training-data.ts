@@ -12,13 +12,13 @@ const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7']
 const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
 export const labeledSongs: LabeledSong[] = [
-  ['easy',imagine],
-  ['easy',somewhereOverTheRainbow],
-  ['easy',tooManyCooks],
-  ['medium',iWillFollowYouIntoTheDark],
-  ['medium',babyOneMoreTime],
-  ['medium',creep],
-  ['hard',paperBag],
-  ['hard',toxic],
-  ['hard',bulletproof],
+  ['easy', imagine],
+  ['easy', somewhereOverTheRainbow],
+  ['easy', tooManyCooks],
+  ['medium', iWillFollowYouIntoTheDark],
+  ['medium', babyOneMoreTime],
+  ['medium', creep],
+  ['hard', paperBag],
+  ['hard', toxic],
+  ['hard', bulletproof],
 ];
