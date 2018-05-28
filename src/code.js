@@ -1,18 +1,16 @@
-fs = require('fs');
+const fs = require('fs');
 // songs
-imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
-somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
-tooManyCooks = ['c', 'g', 'f'];
-iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
-babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
-creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
-army = ['ab', 'ebm7', 'dbadd9', 'fm7', 'bbm', 'abmaj7', 'ebm'];
-paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7',
-  'em7', 'a7', 'f7', 'b'];
-toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7',
-  'g7'];
-bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
-song_11 = [];
+const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
+const somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
+const tooManyCooks = ['c', 'g', 'f'];
+const iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
+const babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
+const creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
+const army = ['ab', 'ebm7', 'dbadd9', 'fm7', 'bbm', 'abmaj7', 'ebm'];
+const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'];
+const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'];
+const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
+const song_11 = [];
 var songs = [];
 var labels = [];
 var allChords = [];
@@ -86,9 +84,9 @@ setLabelProbabilities();
 setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
-function classify(chords) {
+export function classify(chords) {
   var ttal = labelProbabilities;
-  console.log(ttal);
+  // console.log(ttal);
   var classified = {};
   Object.keys(ttal).forEach(function (obj) {
     var first = labelProbabilities[obj] + 1.01;
@@ -103,7 +101,7 @@ function classify(chords) {
     });
     classified[obj] = first;
   });
-  console.log(classified);
+  return classified;
 };
-classify(['d', 'g', 'e', 'dm']);
-classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+// classify(['d', 'g', 'e', 'dm']);
+// classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
