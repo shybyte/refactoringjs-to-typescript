@@ -3,7 +3,7 @@ import {classify, makeReady, train} from '../src/classifier';
 import {labeledSongs} from '../src/training-data';
 
 describe('original output', () => {
-  beforeEach(() => {
+  before(() => {
     labeledSongs.forEach(([label, song]) => train(song, label));
     makeReady();
   })
