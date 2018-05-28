@@ -1,7 +1,13 @@
 import {assert} from 'chai';
-import {classify} from '../src/code';
+import {classify, makeReady, train} from '../src/classifier';
+import {labeledSongs} from '../src/training-data';
 
 describe('original output', () => {
+  beforeEach(() => {
+    labeledSongs.forEach(([label, song]) => train(song, label));
+    makeReady();
+  })
+
   it('classifies example 1', () => {
     assert.deepEqual(classify(['d', 'g', 'e', 'dm']), {
       easy: 2.023094827160494,
