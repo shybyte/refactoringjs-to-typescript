@@ -4,7 +4,7 @@ interface NumberMap {
   [key: string]: number;
 }
 
-export class Classifier {
+export class ClassifierBuilder {
   private songs: LabeledSong[] = [];
   private labelCounts: NumberMap = {};
   private labelProbabilities: NumberMap = {};
@@ -16,28 +16,11 @@ export class Classifier {
     this.labelCounts[label] = (this.labelCounts[label] || 0) + 1;
   }
 
-  public makeReady() {
+  public build() {
     this.setLabelProbabilities();
     this.setChordCountsInLabels();
     this.setProbabilityOfChordsInLabels();
-  }
-
-  public classify(chords: string[]) {
-    const classified: NumberMap = {};
-    Object.keys(this.labelProbabilities).forEach(obj => {
-      let first = this.labelProbabilities[obj] + 1.01;
-      chords.forEach(chord => {
-        const probabilityOfChordInLabel = this.probabilityOfChordsInLabels[obj][chord];
-        if (probabilityOfChordInLabel === undefined) {
-          // TODO: Why ?
-          // first + 1.01;
-        } else {
-          first = first * (probabilityOfChordInLabel + 1.01);
-        }
-      });
-      classified[obj] = first;
-    });
-    return classified;
+    return new Classifier(this.labelProbabilities, this.probabilityOfChordsInLabels);
   }
 
   private setLabelProbabilities() {
@@ -64,5 +47,29 @@ export class Classifier {
           this.probabilityOfChordsInLabels[i][j] * 1.0 / this.songs.length;
       });
     });
+  }
+}
+
+export class Classifier {
+  constructor(private labelProbabilities: NumberMap,
+              private probabilityOfChordsInLabels: { [label: string]: NumberMap }) {
+  }
+
+  public classify(chords: string[]) {
+    const classified: NumberMap = {};
+    Object.keys(this.labelProbabilities).forEach(obj => {
+      let first = this.labelProbabilities[obj] + 1.01;
+      chords.forEach(chord => {
+        const probabilityOfChordInLabel = this.probabilityOfChordsInLabels[obj][chord];
+        if (probabilityOfChordInLabel === undefined) {
+          // TODO: Why ?
+          // first + 1.01;
+        } else {
+          first = first * (probabilityOfChordInLabel + 1.01);
+        }
+      });
+      classified[obj] = first;
+    });
+    return classified;
   }
 }
