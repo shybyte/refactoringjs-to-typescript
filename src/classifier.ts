@@ -29,8 +29,8 @@ export class ClassifierBuilder {
 
     const probabilityOfChordsInLabels: { [label: string]: NumberMap } = {};
     Object.keys(this.chordCountsInLabels).forEach(label => {
+      probabilityOfChordsInLabels[label] = {};
       Object.keys(this.chordCountsInLabels[label]).forEach(chord => {
-        probabilityOfChordsInLabels[label] = probabilityOfChordsInLabels[label] || {};
         probabilityOfChordsInLabels[label][chord] = this.chordCountsInLabels[label][chord] / this.songCount;
       });
     });
