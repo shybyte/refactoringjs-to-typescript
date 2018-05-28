@@ -1,4 +1,3 @@
-const fs = require('fs');
 // songs
 const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
 const somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
@@ -11,6 +10,7 @@ const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a
 const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'];
 const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 const song_11 = [];
+
 var songs = [];
 var labels = [];
 var allChords = [];
@@ -103,5 +103,3 @@ export function classify(chords) {
   });
   return classified;
 };
-// classify(['d', 'g', 'e', 'dm']);
-// classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
