@@ -9,17 +9,19 @@ const army = ['ab', 'ebm7', 'dbadd9', 'fm7', 'bbm', 'abmaj7', 'ebm'];
 const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'];
 const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'];
 const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
-const song_11 = [];
 
-var songs = [];
-var labels = [];
-var allChords = [];
-var labelCounts = [];
-var labelProbabilities = [];
-var chordCountsInLabels = {};
-var probabilityOfChordsInLabels = {};
+type Song = [string, string[]];
+type NumberMap = {[key: string]: number};
 
-function train(chords, label) {
+const songs: Song[] = [];
+const labels: string[] = [];
+const allChords: string[] = [];
+const labelCounts: NumberMap = {};
+const labelProbabilities: NumberMap = {};
+const chordCountsInLabels: {[label: string]: NumberMap}  = {};
+let probabilityOfChordsInLabels: {[label: string]: NumberMap} = {};
+
+export function train(chords: string[], label: string) {
   songs.push([label, chords]);
   labels.push(label);
   for (var i = 0; i < chords.length; i++) {
@@ -84,10 +86,10 @@ setLabelProbabilities();
 setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
-export function classify(chords) {
+export function classify(chords: string[]) {
   var ttal = labelProbabilities;
   // console.log(ttal);
-  var classified = {};
+  var classified: NumberMap = {};
   Object.keys(ttal).forEach(function (obj) {
     var first = labelProbabilities[obj] + 1.01;
     chords.forEach(function (chord) {
