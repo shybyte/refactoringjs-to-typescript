@@ -1,13 +1,13 @@
 export type LabeledSong = [string, string[]];
 
-interface NumberMap {
-  [key: string]: number;
+interface LabelNumberMap {
+  [label: string]: number;
 }
 
 export class ClassifierBuilder {
   private songCount = 0;
-  private labelCounts: NumberMap = {};
-  private chordCountsInLabels: { [label: string]: NumberMap } = {};
+  private labelCounts: LabelNumberMap = {};
+  private chordCountsInLabels: { [label: string]: LabelNumberMap } = {};
 
   public train(chords: string[], label: string) {
     this.songCount += 1;
@@ -22,12 +22,12 @@ export class ClassifierBuilder {
   }
 
   public build() {
-    const labelProbabilities: NumberMap = {};
+    const labelProbabilities: LabelNumberMap = {};
     Object.keys(this.labelCounts).forEach((label) => {
       labelProbabilities[label] = this.labelCounts[label] / this.songCount;
     });
 
-    const probabilityOfChordsInLabels: { [label: string]: NumberMap } = {};
+    const probabilityOfChordsInLabels: { [label: string]: LabelNumberMap } = {};
     Object.keys(this.chordCountsInLabels).forEach(label => {
       probabilityOfChordsInLabels[label] = {};
       Object.keys(this.chordCountsInLabels[label]).forEach(chord => {
@@ -40,12 +40,12 @@ export class ClassifierBuilder {
 }
 
 export class Classifier {
-  constructor(private labelProbabilities: NumberMap,
-              private probabilityOfChordsInLabels: { [label: string]: NumberMap }) {
+  constructor(private labelProbabilities: LabelNumberMap,
+              private probabilityOfChordsInLabels: { [label: string]: LabelNumberMap }) {
   }
 
   public classify(chords: string[]) {
-    const probabilityOfLabels: NumberMap = {};
+    const probabilityOfLabels: LabelNumberMap = {};
     Object.keys(this.labelProbabilities).forEach(label => {
       probabilityOfLabels[label] = chords
         .map(chord => this.probabilityOfChordsInLabels[label][chord])

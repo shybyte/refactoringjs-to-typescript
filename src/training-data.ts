@@ -1,6 +1,6 @@
-// songs
 import {LabeledSong} from './classifier';
 
+// Songs
 const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
 const somewhereOverTheRainbow = ['c', 'em', 'f', 'g', 'am'];
 const tooManyCooks = ['c', 'g', 'f'];
@@ -11,7 +11,7 @@ const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a
 const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'];
 const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
-export const labeledSongs: LabeledSong[] = [
+export const LABELED_SONGS: LabeledSong[] = [
   ['easy', imagine],
   ['easy', somewhereOverTheRainbow],
   ['easy', tooManyCooks],

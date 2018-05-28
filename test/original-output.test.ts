@@ -1,13 +1,13 @@
 import {assert} from 'chai';
 import {Classifier, ClassifierBuilder} from '../src/classifier';
-import {labeledSongs} from '../src/training-data';
+import {LABELED_SONGS} from '../src/training-data';
 
 describe('original output', () => {
   let classifier: Classifier;
 
   before(() => {
     const classifierBuilder = new ClassifierBuilder();
-    labeledSongs.forEach(([label, song]) => classifierBuilder.train(song, label));
+    LABELED_SONGS.forEach(([label, song]) => classifierBuilder.train(song, label));
     classifier = classifierBuilder.build();
   });
 
