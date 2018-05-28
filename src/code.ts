@@ -1,6 +1,6 @@
 // songs
 const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
-const somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
+const somewhereOverTheRainbow = ['c', 'em', 'f', 'g', 'am'];
 const tooManyCooks = ['c', 'g', 'f'];
 const iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
 const babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
@@ -11,22 +11,25 @@ const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7']
 const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
 type Song = [string, string[]];
-type NumberMap = {[key: string]: number};
+
+interface NumberMap {
+  [key: string]: number;
+}
 
 const songs: Song[] = [];
 const labels: string[] = [];
 const allChords: string[] = [];
 const labelCounts: NumberMap = {};
 const labelProbabilities: NumberMap = {};
-const chordCountsInLabels: {[label: string]: NumberMap}  = {};
-let probabilityOfChordsInLabels: {[label: string]: NumberMap} = {};
+const chordCountsInLabels: { [label: string]: NumberMap } = {};
+let probabilityOfChordsInLabels: { [label: string]: NumberMap } = {};
 
 export function train(chords: string[], label: string) {
   songs.push([label, chords]);
   labels.push(label);
-  for (var i = 0; i < chords.length; i++) {
-    if (!allChords.includes(chords[i])) {
-      allChords.push(chords[i]);
+  for (const chord of chords) {
+    if (!allChords.includes(chord)) {
+      allChords.push(chord);
     }
   }
   if (!!(Object.keys(labelCounts).includes(label))) {
@@ -34,25 +37,25 @@ export function train(chords: string[], label: string) {
   } else {
     labelCounts[label] = 1;
   }
-};
+}
 
 function getNumberOfSongs() {
   return songs.length;
-};
+}
 
 function setLabelProbabilities() {
-  Object.keys(labelCounts).forEach(function (label) {
-    var numberOfSongs = getNumberOfSongs();
+  Object.keys(labelCounts).forEach((label) => {
+    const numberOfSongs = getNumberOfSongs();
     labelProbabilities[label] = labelCounts[label] / numberOfSongs;
   });
-};
+}
 
 function setChordCountsInLabels() {
-  songs.forEach(function (i) {
+  songs.forEach(i => {
     if (chordCountsInLabels[i[0]] === undefined) {
       chordCountsInLabels[i[0]] = {};
     }
-    i[1].forEach(function (j) {
+    i[1].forEach(j => {
       if (chordCountsInLabels[i[0]][j] > 0) {
         chordCountsInLabels[i[0]][j] =
           chordCountsInLabels[i[0]][j] + 1;
@@ -65,8 +68,8 @@ function setChordCountsInLabels() {
 
 function setProbabilityOfChordsInLabels() {
   probabilityOfChordsInLabels = chordCountsInLabels;
-  Object.keys(probabilityOfChordsInLabels).forEach(function (i) {
-    Object.keys(probabilityOfChordsInLabels[i]).forEach(function (j) {
+  Object.keys(probabilityOfChordsInLabels).forEach(i => {
+    Object.keys(probabilityOfChordsInLabels[i]).forEach(j => {
       probabilityOfChordsInLabels[i][j] =
         probabilityOfChordsInLabels[i][j] * 1.0 / songs.length;
     });
@@ -74,7 +77,7 @@ function setProbabilityOfChordsInLabels() {
 }
 
 train(imagine, 'easy');
-train(somewhere_over_the_rainbow, 'easy');
+train(somewhereOverTheRainbow, 'easy');
 train(tooManyCooks, 'easy');
 train(iWillFollowYouIntoTheDark, 'medium');
 train(babyOneMoreTime, 'medium');
@@ -87,16 +90,17 @@ setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
 export function classify(chords: string[]) {
-  var ttal = labelProbabilities;
+  const ttal = labelProbabilities;
   // console.log(ttal);
-  var classified: NumberMap = {};
-  Object.keys(ttal).forEach(function (obj) {
-    var first = labelProbabilities[obj] + 1.01;
-    chords.forEach(function (chord) {
-      var probabilityOfChordInLabel =
+  const classified: NumberMap = {};
+  Object.keys(ttal).forEach(obj => {
+    let first = labelProbabilities[obj] + 1.01;
+    chords.forEach(chord => {
+      const probabilityOfChordInLabel =
         probabilityOfChordsInLabels[obj][chord];
       if (probabilityOfChordInLabel === undefined) {
-        first + 1.01;
+        // TODO: Why ?
+        // first + 1.01;
       } else {
         first = first * (probabilityOfChordInLabel + 1.01);
       }
@@ -104,4 +108,4 @@ export function classify(chords: string[]) {
     classified[obj] = first;
   });
   return classified;
-};
+}
